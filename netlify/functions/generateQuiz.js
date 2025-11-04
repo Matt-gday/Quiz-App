@@ -8,7 +8,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { topic, numberOfQuestions = 10 } = JSON.parse(event.body);
+    const { topic, numberOfQuestions = 10, difficulty = 'Medium' } = JSON.parse(event.body);
 
     if (!topic) {
       return {
@@ -39,22 +39,44 @@ exports.handler = async (event, context) => {
         max_tokens: 4096,
         messages: [{
           role: 'user',
-          content: `Generate a quiz CSV file with exactly ${numberOfQuestions} multiple-choice questions about "${topic}".
+          content: `Generate a quiz CSV file with exactly ${numberOfQuestions} multiple-choice questions about "${topic}" at ${difficulty} difficulty level.
 
-Format requirements:
-- Each row should have: Topic,Question,Option A,Option B,Option C,Option D,Correct Answer
-- Topic should be: ${topic}
-- Include exactly 4 answer options (A, B, C, D) for each question
-- The Correct Answer column should contain ONLY the letter (A, B, C, or D)
-- Questions should be challenging but fair
-- Ensure variety in which option is correct (don't always make A or D correct)
-- Make questions interesting and educational
+=== CSV FORMAT REQUIREMENTS ===
 
-IMPORTANT: Output ONLY the CSV content with no introduction, explanation, or markdown formatting. Start directly with the header row.
+The CSV file must follow this exact format:
+- Header row: Topic,Question,Answer1,Answer2,Answer3,Answer4,CorrectAnswer
+- Each data row contains: topic name, question text, four answer options, and the correct answer text
+- The CorrectAnswer field must EXACTLY match one of the four answer options (Answer1-4) - same text, same capitalization, same punctuation
+- All text fields should be enclosed in quotes if they contain commas
+- Each question must have exactly 4 answer options
+- Questions should be clear, unambiguous, and have only one correct answer
+
+=== QUALITY GUIDELINES ===
+
+Difficulty Level: ${difficulty}
+${difficulty === 'Easy' ? '- Use straightforward questions that test basic knowledge\n- Avoid obscure facts or complex reasoning' : ''}
+${difficulty === 'Medium' ? '- Use questions that require moderate knowledge\n- Mix factual recall with some reasoning' : ''}
+${difficulty === 'Hard' ? '- Use challenging questions that test deeper knowledge\n- Include questions requiring analysis or specialized knowledge' : ''}
+
+QUESTION QUALITY:
+- Questions should be clear and unambiguous
+- Avoid trick questions or questions with multiple valid answers
+- Mix different question types (facts, identification, comparison, etc.)
+
+ANSWER OPTIONS:
+- All four options should be plausible
+- Avoid obvious incorrect answers
+- Similar length and format for all options
+- Randomize which answer position (1-4) contains the correct answer (don't always put correct answer in same position)
+
+CRITICAL: The CorrectAnswer field must EXACTLY match one of Answer1, Answer2, Answer3, or Answer4 - character for character, including capitalization and punctuation.
+
+IMPORTANT: Output ONLY the CSV content with no introduction, explanation, or markdown code blocks. Start directly with the header row.
 
 Example format:
-Topic,Question,Option A,Option B,Option C,Option D,Correct Answer
-${topic},What is...?,Answer 1,Answer 2,Answer 3,Answer 4,B`
+Topic,Question,Answer1,Answer2,Answer3,Answer4,CorrectAnswer
+"${topic}","What is the largest planet in our solar system?","Mars","Jupiter","Saturn","Neptune","Jupiter"
+"${topic}","How many moons does Earth have?","1","2","3","0","1"`
         }]
       })
     });

@@ -46,8 +46,32 @@
             <!-- AI Quiz Generator Section -->
             <div class="ai-generator-section">
                 <h3 class="ai-section-title">🤖 Generate Quiz with AI</h3>
-                <div class="ai-input-group">
+                <div class="ai-controls">
                     <input type="text" id="ai-topic-input" class="ai-topic-input" placeholder="Enter a topic (e.g., Australian Animals)">
+                    
+                    <div class="ai-options-row">
+                        <div class="ai-option-group">
+                            <label for="ai-question-count">Questions:</label>
+                            <select id="ai-question-count" class="ai-select">
+                                <option value="6">6 questions</option>
+                                <option value="8">8 questions</option>
+                                <option value="10" selected>10 questions</option>
+                                <option value="12">12 questions</option>
+                                <option value="15">15 questions</option>
+                                <option value="20">20 questions</option>
+                            </select>
+                        </div>
+                        
+                        <div class="ai-option-group">
+                            <label for="ai-difficulty">Difficulty:</label>
+                            <select id="ai-difficulty" class="ai-select">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <button id="generate-quiz-btn" class="btn btn-ai">Generate Quiz</button>
                 </div>
                 <div id="ai-loading" class="ai-loading" style="display: none;">

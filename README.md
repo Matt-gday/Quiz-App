@@ -47,26 +47,26 @@ npm run dev
 If you prefer to upload your own questions, use this CSV format:
 
 ```csv
-Topic,Question,Option A,Option B,Option C,Option D,Correct Answer
-Australian Animals,What is the fastest land animal in Australia?,Kangaroo,Emu,Dingo,Wombat,B
-Space,What is the largest planet in our solar system?,Mars,Jupiter,Saturn,Neptune,B
+Topic,Question,Answer1,Answer2,Answer3,Answer4,CorrectAnswer
+"Australian Animals","What is the fastest land animal in Australia?","Kangaroo","Emu","Dingo","Wombat","Emu"
+"Space","What is the largest planet in our solar system?","Mars","Jupiter","Saturn","Neptune","Jupiter"
 ```
 
 - **Topic**: Category or theme
 - **Question**: The question text
-- **Options A-D**: Four answer choices
-- **Correct Answer**: Letter (A, B, C, or D)
+- **Answer1-4**: Four answer choices
+- **CorrectAnswer**: The actual text of the correct answer (must EXACTLY match one of Answer1-4)
 
 ### Multi-Round Games
 
 You can include multiple topics in one CSV file, and each topic will become a separate round:
 
 ```csv
-Topic,Question,Option A,Option B,Option C,Option D,Correct Answer
-Australian Animals,Question 1...,A,B,C,D,A
-Australian Animals,Question 2...,A,B,C,D,C
-Space,Question 1...,A,B,C,D,B
-Space,Question 2...,A,B,C,D,D
+Topic,Question,Answer1,Answer2,Answer3,Answer4,CorrectAnswer
+"Australian Animals","What is a kangaroo?","Mammal","Reptile","Bird","Fish","Mammal"
+"Australian Animals","Where do koalas live?","Trees","Water","Desert","Mountains","Trees"
+"Space","What is the largest planet?","Mars","Jupiter","Saturn","Neptune","Jupiter"
+"Space","How many moons does Earth have?","1","2","3","0","1"
 ```
 
 This CSV would create 2 rounds: one for Australian Animals, one for Space.

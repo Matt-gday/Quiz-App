@@ -238,16 +238,24 @@ function parseCSV(file) {
         for (let i = 1; i < lines.length; i++) {
             const values = parseCSVLine(lines[i]);
             if (values.length >= 7) {
+                const answers = [
+                    values[2].trim(),
+                    values[3].trim(),
+                    values[4].trim(),
+                    values[5].trim()
+                ];
+                const correctAnswer = values[6].trim();
+                
+                // Validate that correct answer matches one of the answer options
+                if (!answers.includes(correctAnswer)) {
+                    console.warn(`Question ${i}: Correct answer "${correctAnswer}" does not match any of the answer options:`, answers);
+                }
+                
                 allQuestions.push({
                     topic: values[0].trim(),
                     question: values[1].trim(),
-                    answers: [
-                        values[2].trim(),
-                        values[3].trim(),
-                        values[4].trim(),
-                        values[5].trim()
-                    ],
-                    correctAnswer: values[6].trim()
+                    answers: answers,
+                    correctAnswer: correctAnswer
                 });
             }
         }
@@ -386,6 +394,15 @@ async function generateAIQuiz() {
         return;
     }
     
+    const questionCount = parseInt(document.getElementById('ai-question-count').value);
+    const difficulty = document.getElementById('ai-difficulty').value;
+    
+    // Validate question count against number of players
+    if (questionCount < gameState.numPlayers) {
+        showErrorModal(`You need at least <strong>${gameState.numPlayers} questions</strong> (one per player).<br><br>Please select a higher question count.`);
+        return;
+    }
+    
     const generateBtn = document.getElementById('generate-quiz-btn');
     const loadingDiv = document.getElementById('ai-loading');
     
@@ -401,7 +418,8 @@ async function generateAIQuiz() {
             },
             body: JSON.stringify({
                 topic: topic,
-                numberOfQuestions: gameState.numPlayers * 2 // 2 questions per player
+                numberOfQuestions: questionCount,
+                difficulty: difficulty
             })
         });
         

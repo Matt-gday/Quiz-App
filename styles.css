@@ -1087,16 +1087,16 @@ h1 {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.ai-input-group {
+.ai-controls {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 20px;
     align-items: center;
-    justify-content: center;
 }
 
 .ai-topic-input {
-    flex: 1;
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
     padding: 15px 25px;
     font-size: 1.1em;
     background: rgba(255, 255, 255, 0.1);
@@ -1110,6 +1110,56 @@ h1 {
     box-shadow: 
         0 5px 15px rgba(0, 0, 0, 0.2),
         inset 0 1px 20px rgba(255, 255, 255, 0.5);
+}
+
+.ai-options-row {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ai-option-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-option-group label {
+    color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.ai-select {
+    padding: 10px 20px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 5px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 20px rgba(255, 255, 255, 0.5);
+    min-width: 140px;
+}
+
+.ai-select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.ai-select option {
+    background: #2a1a4a;
+    color: #ffffff;
 }
 
 .ai-topic-input::placeholder {
@@ -1207,13 +1257,17 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    .ai-input-group {
+    .ai-options-row {
         flex-direction: column;
+        gap: 15px;
     }
     
     .ai-topic-input {
         max-width: 100%;
-        width: 100%;
+    }
+    
+    .ai-select {
+        width: 200px;
     }
 }
 
