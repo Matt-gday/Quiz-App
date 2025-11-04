@@ -42,6 +42,24 @@
                 <h1>Round <span id="round-number">1</span></h1>
                 <p class="subtitle">Upload a CSV file with questions</p>
             </div>
+            
+            <!-- AI Quiz Generator Section -->
+            <div class="ai-generator-section">
+                <h3 class="ai-section-title">🤖 Generate Quiz with AI</h3>
+                <div class="ai-input-group">
+                    <input type="text" id="ai-topic-input" class="ai-topic-input" placeholder="Enter a topic (e.g., Australian Animals)">
+                    <button id="generate-quiz-btn" class="btn btn-ai">Generate Quiz</button>
+                </div>
+                <div id="ai-loading" class="ai-loading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Generating quiz questions...</p>
+                </div>
+            </div>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
             <div class="upload-area" id="upload-area">
                 <input type="file" id="csv-upload" accept=".csv" style="display: none;">
                 <div class="drop-zone" id="drop-zone">

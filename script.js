@@ -170,8 +170,18 @@ function setupRoundUpload() {
     csvPreview.innerHTML = '';
     startRoundBtn.style.display = 'none';
     
+    // Reset AI section
+    document.getElementById('ai-topic-input').value = '';
+    document.getElementById('ai-loading').style.display = 'none';
+    document.querySelector('.ai-generator-section').style.display = 'block';
+    document.querySelector('.divider').style.display = 'flex';
+    
     // Update round number
     document.getElementById('round-number').textContent = gameState.currentRound;
+    
+    // Handle AI quiz generation
+    const generateBtn = document.getElementById('generate-quiz-btn');
+    generateBtn.onclick = generateAIQuiz;
     
     // Handle upload button click
     const uploadBtn = document.getElementById('upload-btn-trigger');
@@ -364,6 +374,66 @@ function showErrorModal(message) {
     document.getElementById('error-ok-btn').onclick = () => {
         modal.classList.remove('active');
     };
+}
+
+// AI Quiz Generation
+async function generateAIQuiz() {
+    const topicInput = document.getElementById('ai-topic-input');
+    const topic = topicInput.value.trim();
+    
+    if (!topic) {
+        showErrorModal('Please enter a topic for the quiz');
+        return;
+    }
+    
+    const generateBtn = document.getElementById('generate-quiz-btn');
+    const loadingDiv = document.getElementById('ai-loading');
+    
+    // Show loading state
+    generateBtn.disabled = true;
+    loadingDiv.style.display = 'block';
+    
+    try {
+        const response = await fetch('/.netlify/functions/generateQuiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                topic: topic,
+                numberOfQuestions: gameState.numPlayers * 2 // 2 questions per player
+            })
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to generate quiz');
+        }
+        
+        const data = await response.json();
+        const csvContent = data.csv;
+        
+        // Create a Blob from the CSV content
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        
+        // Create a File object to pass to parseCSV
+        const file = new File([blob], `${topic.replace(/\s+/g, '_')}_quiz.csv`, { type: 'text/csv' });
+        
+        // Parse the CSV
+        parseCSV(file);
+        
+        // Hide AI section and divider after successful generation
+        document.querySelector('.ai-generator-section').style.display = 'none';
+        document.querySelector('.divider').style.display = 'none';
+        
+    } catch (error) {
+        console.error('Error generating quiz:', error);
+        showErrorModal(`Failed to generate quiz: ${error.message}<br><br>Please try again or upload a CSV file manually.`);
+    } finally {
+        // Reset loading state
+        generateBtn.disabled = false;
+        loadingDiv.style.display = 'none';
+    }
 }
 
 // Screen 4: Question Screen
