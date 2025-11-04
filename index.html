@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Battle - Multiplayer Quiz Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="alien.png" alt="Alien character" class="character-left">
+        <img src="spaceman.png" alt="Spaceman character" class="character-right">
+        <!-- Screen 1: Number of Players -->
+        <div id="screen-player-count" class="screen active">
+            <h1>Quiz Battle</h1>
+            <p class="subtitle">How many players will compete?</p>
+            <div class="player-count-buttons">
+                <button class="player-count-btn" data-count="2">2 Players</button>
+                <button class="player-count-btn" data-count="3">3 Players</button>
+                <button class="player-count-btn" data-count="4">4 Players</button>
+                <button class="player-count-btn" data-count="5">5 Players</button>
+                <button class="player-count-btn" data-count="6">6 Players</button>
+            </div>
+            <button id="play-btn" class="play-button" disabled>
+                <svg class="play-icon" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Screen 2: Player Setup -->
+        <div id="screen-player-setup" class="screen">
+            <h1>Player Setup</h1>
+            <p class="subtitle">Enter your names and choose avatars</p>
+            <div id="player-forms"></div>
+            <button id="start-game-btn" class="btn btn-primary">Start Game</button>
+        </div>
+
+        <!-- Screen 3: Round Setup (CSV Upload) -->
+        <div id="screen-round-setup" class="screen">
+            <div id="upload-header">
+                <h1>Round <span id="round-number">1</span></h1>
+                <p class="subtitle">Upload a CSV file with questions</p>
+            </div>
+            <div class="upload-area" id="upload-area">
+                <input type="file" id="csv-upload" accept=".csv" style="display: none;">
+                <div class="drop-zone" id="drop-zone">
+                    <span class="drop-text">Drop CSV to upload</span>
+                </div>
+                <button class="btn btn-secondary upload-btn" id="upload-btn-trigger">Click to upload CSV</button>
+            </div>
+            <div id="csv-preview" class="csv-preview"></div>
+            <button id="start-round-btn" class="btn btn-primary" style="display: none;">Start Round</button>
+        </div>
+
+        <!-- Screen 4: Question Screen -->
+        <div id="screen-question" class="screen">
+            <div class="scoreboard">
+                <div id="scoreboard-content"></div>
+            </div>
+            
+            <div class="current-player-banner" id="current-player-banner">
+                <span class="player-emoji" id="current-player-emoji"></span>
+                <span class="player-text"><span class="player-name" id="current-player-name"></span>'s Turn</span>
+            </div>
+
+            <div class="question-container">
+                <div class="question-header">
+                    <span class="topic-badge" id="topic-badge"></span>
+                    <span class="question-counter" id="question-counter"></span>
+                </div>
+                <h2 class="question-text" id="question-text"></h2>
+                <div class="answers" id="answers"></div>
+                <button id="submit-answer-btn" class="btn btn-primary" disabled>Submit Answer</button>
+                <button id="next-question-btn" class="btn btn-primary" style="display: none;">Next Question</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Round Results Modal -->
+    <div id="round-results-modal" class="modal">
+        <div class="modal-content">
+            <h2>Round Complete!</h2>
+            <div id="round-results-content"></div>
+            <div class="modal-buttons">
+                <button id="next-round-btn" class="btn btn-primary">Next Round</button>
+                <button id="end-game-btn" class="btn btn-secondary">End Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Results Modal -->
+    <div id="game-results-modal" class="modal">
+        <div class="modal-content modal-large">
+            <h2>Game Over!</h2>
+            <div id="game-results-content"></div>
+            <button id="new-game-btn" class="btn btn-primary">New Game</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <h2>Error</h2>
+            <div id="error-message" style="margin: 20px 0; font-size: 1.1em; line-height: 1.6; color: #ffffff;"></div>
+            <button id="error-ok-btn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
