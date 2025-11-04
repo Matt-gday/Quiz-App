@@ -35,8 +35,8 @@ exports.handler = async (event, context) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4096,
+        model: 'claude-3-5-haiku-20241022',  // Fast, cheap, and great for structured tasks
+        max_tokens: 2048,  // Reduced from 4096 - still plenty for quiz generation
         messages: [{
           role: 'user',
           content: `Generate a quiz CSV file with exactly ${numberOfQuestions} multiple-choice questions about "${topic}" at ${difficulty} difficulty level.
